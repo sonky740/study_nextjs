@@ -26,20 +26,20 @@ const DUMMY_EVENTS = [
       'You probably need no help with networking in general. But focusing your energy correctly - that is something where most people can improve.',
     location: 'My Street 12, 10115 Broke City',
     date: '2022-04-10',
-    image: 'images/extrovert-event.jpg',
+    image: 'images/networking-event.jpg',
     isFeatured: true,
   },
 ];
 
-export function getFeaturedEvents() {
+function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
 }
 
-export function getAllEvents() {
+function getAllEvents() {
   return DUMMY_EVENTS;
 }
 
-export function getFilteredEvents(dateFilter) {
+function getFilteredEvents(dateFilter) {
   const { year, month } = dateFilter;
 
   let filteredEvents = DUMMY_EVENTS.filter((event) => {
@@ -52,6 +52,13 @@ export function getFilteredEvents(dateFilter) {
   return filteredEvents;
 }
 
-export function getEventById(id) {
+function getEventById(id) {
   return DUMMY_EVENTS.find((event) => event.id === id);
+}
+
+export {
+  getFeaturedEvents,
+  getAllEvents,
+  getFilteredEvents,
+  getEventById
 }
