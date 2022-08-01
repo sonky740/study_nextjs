@@ -2,9 +2,9 @@ import path from 'path';
 import fs from 'fs/promises';
 
 function ProductDetailPage({ loadedProduct }) {
-  //   if (!loadedProduct) {
-  //     return <p>Loading...</p>;
-  //   }
+  if (!loadedProduct) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -30,6 +30,10 @@ export async function getStaticProps(context) {
 
   const product = data.products.find((product) => product.id === productId);
 
+  if (!product) {
+    return { notFound: true };
+  }
+
   return {
     props: {
       loadedProduct: product,
@@ -46,7 +50,7 @@ export async function getStaticPaths() {
 
   return {
     paths: pathWithParams,
-    fallback: false,
+    fallback: true, // false = 맞는 페이지가 없으면 404
   };
 }
 
