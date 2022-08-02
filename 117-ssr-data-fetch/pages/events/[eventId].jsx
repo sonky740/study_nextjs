@@ -1,21 +1,20 @@
-import { useRouter } from 'next/router';
-import { getEventById } from '../../data/dummy-data';
-
+import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
 import EventSummary from '../../components/EventDetail/EventSummary';
 import EventLogistics from '../../components/EventDetail/EventLogistics';
 import EventContent from '../../components/EventDetail/EventContent';
 import ErrorAlert from '../../components/UI/ErrorAlert';
 
-function EventDetailPage() {
-  const router = useRouter();
-
-  const eventId = router.query.eventId;
-  const event = getEventById(eventId);
+function EventDetailPage({ selectedEvent }) {
+  const event = selectedEvent;
 
   if (!event) {
-    return <ErrorAlert>
-      <p>No event found!</p>
-    </ErrorAlert>;
+    return (
+      <ErrorAlert>
+        <div className="center">
+          <p>Loading...</p>
+        </div>
+      </ErrorAlert>
+    );
   }
 
   return (
@@ -32,6 +31,30 @@ function EventDetailPage() {
       </EventContent>
     </>
   );
+}
+
+export async function getStaticProps(context) {
+  const eventId = context.params.eventId;
+
+  const event = await getEventById(eventId);
+
+  return {
+    props: {
+      selectedEvent: event,
+    },
+    revalidate: 30
+  };
+}
+
+// 동적 페이지라서 getStaticProps만 있으면 작동을 안함.
+export async function getStaticPaths() {
+  const events = await getFeaturedEvents();
+  const paths = events.map((event) => ({ params: { eventId: event.id } }));
+
+  return {
+    paths: paths,
+    fallback: true // false = 404, isFeatured가 true인 것만 사전 재생성을 했끼에 true로 설정
+  };
 }
 
 export default EventDetailPage;
