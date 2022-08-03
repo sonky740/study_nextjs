@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import AddressIcon from '../Icons/AddressIcon';
 import ArrowRightIcon from '../Icons/ArrowRightIcon.jsx';
 import DateIcon from '../Icons/DateIcon';
@@ -15,7 +16,7 @@ function EventItem({ title, image, date, location, id }) {
 
   return (
     <li className={classes.item}>
-      <img src={`/${image}`} alt={title} />
+      <Image src={`/${image}`} alt={title} width={250} height={160} />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>

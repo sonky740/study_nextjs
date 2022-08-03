@@ -1,4 +1,5 @@
 import { getEventById, getFeaturedEvents } from '../../helpers/api-util';
+import Head from 'next/head';
 import EventSummary from '../../components/EventDetail/EventSummary';
 import EventLogistics from '../../components/EventDetail/EventLogistics';
 import EventContent from '../../components/EventDetail/EventContent';
@@ -19,6 +20,13 @@ function EventDetailPage({ selectedEvent }) {
 
   return (
     <>
+      <Head>
+        <title>{event.title}</title>
+        <meta
+          name="description"
+          content={event.description}
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
@@ -42,7 +50,7 @@ export async function getStaticProps(context) {
     props: {
       selectedEvent: event,
     },
-    revalidate: 30
+    revalidate: 30,
   };
 }
 
@@ -53,7 +61,7 @@ export async function getStaticPaths() {
 
   return {
     paths: paths,
-    fallback: true // false = 404, isFeatured가 true인 것만 사전 재생성을 했끼에 true로 설정
+    fallback: true, // false = 404, isFeatured가 true인 것만 사전 재생성을 했끼에 true로 설정
   };
 }
 
