@@ -14,13 +14,13 @@ export async function insertDocument(client, collection, document) {
   return result;
 }
 
-export async function getAllDocuments(client, collection, sort) {
+export async function getAllDocuments(client, collection, sort, filter = {}) {
   const db = client.db();
 
   const documents = await db
-    .collection('comments')
-    .find()
-    .sort({ _id: -1 }) // comments를 id 기준으로 내림차순으로 정렬
+    .collection(collection)
+    .find(filter)
+    .sort(sort) // comments를 id 기준으로 내림차순으로 정렬
     .toArray();
 
   return documents;
