@@ -1,8 +1,18 @@
+import Head from 'next/head';
+
 import PostContent from '../../components/Posts/PostDetail/PostContent';
 import { getPostData, getPostsFiles } from '../../lib/posts-util';
 
-function PostDetailPage({post}) {
-  return <PostContent post={post} />;
+function PostDetailPage({ post }) {
+  return (
+    <>
+      <Head>
+        <title>{post.title}</title>
+        <meta name="description" content={post.excerpt} />
+      </Head>
+      <PostContent post={post} />
+    </>
+  );
 }
 
 export function getStaticProps(context) {
@@ -10,7 +20,6 @@ export function getStaticProps(context) {
   const { slug } = params;
 
   const postData = getPostData(slug);
-  console.log(slug);
 
   return {
     props: {
