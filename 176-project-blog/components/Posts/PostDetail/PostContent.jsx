@@ -1,10 +1,15 @@
 import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
-import { Prism } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { PrismLight } from 'react-syntax-highlighter';
+import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
+import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
+import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 
 import classes from './PostContent.module.css';
 import PostHeader from './PostHeader';
+
+PrismLight.registerLanguage('js', js);
+PrismLight.registerLanguage('css', css);
 
 function PostContent({ post }) {
   const imagePath = `/images/posts/${post.slug}/${post.image}`;
@@ -42,11 +47,7 @@ function PostContent({ post }) {
       const { className, children } = code;
       const language = className.split('-')[1]; // className is something like language-js => We need the "js" part here
       return (
-        <Prism
-          style={atomDark}
-          language={language}
-          children={children}
-        />
+        <PrismLight style={atomDark} language={language} children={children} />
       );
     },
   };
