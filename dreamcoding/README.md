@@ -120,3 +120,9 @@
 
 ## SSR, CSR
 - 사용자의 로그인이 필요
+
+---
+
+# Next.js 주의점
+
+page 전체를 'use client'로 사용하는것보다 필요한 것만 'use client'로 사용하는게 성능상 좋다.
