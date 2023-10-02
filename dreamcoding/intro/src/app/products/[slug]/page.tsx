@@ -1,14 +1,28 @@
 import { getProducts, getProduct } from '@/service/products';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import Image from 'next/image';
+import GoProductsButton from '@/components/GoProductsButton';
 
 export default async function ProductPage({ params: { slug } }: Props) {
   const product = await getProduct(slug);
 
   if (!product) {
-    notFound();
+    redirect('/products');
   }
 
-  return <h1>{product.name}</h1>;
+  return (
+    <>
+      <h1>{product.name}</h1>
+      <Image
+        src={`/images/${product.image}`}
+        alt={product.name}
+        width={400}
+        height={400}
+        priority
+      />
+      <GoProductsButton />
+    </>
+  );
 }
 
 export function generateMetadata({ params }: Props) {

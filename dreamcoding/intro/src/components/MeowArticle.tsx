@@ -7,7 +7,12 @@ export default function MeowArticle() {
 
   useEffect(() => {
     const fetchMeowFacts = async () => {
-      const res = await fetch('https://meowfacts.herokuapp.com');
+      const res = await fetch('https://meowfacts.herokuapp.com', {
+        next: {
+          revalidate: 0,
+        },
+        // cache: 'no-store'
+      });
       const data = await res.json();
       const factText = data.data[0];
 

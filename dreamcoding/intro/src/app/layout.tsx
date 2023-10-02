@@ -1,12 +1,22 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Noto_Sans_KR } from 'next/font/google';
+import { Roboto, Noto_Sans_KR } from 'next/font/google';
+
+const RobotoFont = Roboto({
+  weight: ['400', '700'],
+  style: 'normal',
+  variable: '--font-roboto',
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const NotoSansKRFont = Noto_Sans_KR({
-  weight: '400',
+  weight: ['400', '700'],
   style: 'normal',
+  variable: '--font-noto-sans-kr',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -24,8 +34,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={NotoSansKRFont.className}>
-        <header className="flex justify-between items-center p-2 border-b border-b-blue-900">
+      <body className={`${RobotoFont.variable} ${NotoSansKRFont.variable}`}>
+        <header className="flex justify-between items-center p-2 border-b border-b-blue-900 font-roboto">
           <h1>
             <Link href="/">Demo Note App</Link>
           </h1>
