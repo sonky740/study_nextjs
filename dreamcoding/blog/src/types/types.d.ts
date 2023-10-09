@@ -6,3 +6,7 @@ interface Post {
   path: string;
   featured: boolean;
 }
+
+interface PostData extends Post {
+  content: string;
+}

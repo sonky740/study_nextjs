@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -16,9 +16,9 @@ const config: Config = {
       fontFamily: {
         noto: ['var(--font-noto-sans-kr)'],
         roboto: ['var(--font-roboto)'],
-      }
+      },
     },
   },
-  plugins: [],
-}
-export default config
+  plugins: [require('@tailwindcss/typography')],
+};
+export default config;

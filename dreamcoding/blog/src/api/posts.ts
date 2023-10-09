@@ -18,3 +18,19 @@ export async function getNonFeaturedPosts(): Promise<Post[]> {
   const posts = await getAllPosts();
   return posts.filter((post) => !post.featured);
 }
+
+export async function getPostData(filename: string): Promise<PostData> {
+  const filePath = path.join(process.cwd(), 'data', 'posts', `${filename}.md`);
+  const metadata = await getAllPosts();
+  const postIndex = metadata.findIndex((post) => post.path === filename);
+
+  if (postIndex === -1) {
+    throw new Error('Post not found');
+  }
+
+  const content = await readFile(filePath, 'utf-8');
+  return {
+    ...metadata[postIndex],
+    content,
+  };
+}
