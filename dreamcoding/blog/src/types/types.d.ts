@@ -9,4 +9,11 @@ interface Post {
 
 interface PostData extends Post {
   content: string;
+  next: Post | null;
+  prev: Post | null;
+}
+
+interface BannerData {
+  message: string;
+  state: 'success' | 'error';
 }

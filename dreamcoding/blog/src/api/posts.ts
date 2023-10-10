@@ -21,16 +21,19 @@ export async function getNonFeaturedPosts(): Promise<Post[]> {
 
 export async function getPostData(filename: string): Promise<PostData> {
   const filePath = path.join(process.cwd(), 'data', 'posts', `${filename}.md`);
-  const metadata = await getAllPosts();
-  const postIndex = metadata.findIndex((post) => post.path === filename);
+  const posts = await getAllPosts();
+  const post = posts.find((post) => post.path === filename);
 
-  if (postIndex === -1) {
-    throw new Error('Post not found');
-  }
+  if (!post) throw new Error('Post not found');
 
+  const index = posts.indexOf(post);
+  const next = index > 0 ? posts[index - 1] : null; // 최신글이 맨 앞에 있으므로 index - 1
+  const prev = index < posts.length - 1 ? posts[index + 1] : null;
   const content = await readFile(filePath, 'utf-8');
   return {
-    ...metadata[postIndex],
+    ...post,
     content,
+    next,
+    prev,
   };
 }
