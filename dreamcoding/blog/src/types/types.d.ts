@@ -17,3 +17,9 @@ interface BannerData {
   message: string;
   state: 'success' | 'error';
 }
+
+interface EmailData {
+  from: string;
+  subject: string;
+  message: string;
+}
