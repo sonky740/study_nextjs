@@ -1,13 +1,16 @@
 import { readFile } from 'fs/promises';
 import path from 'path';
+import { cache } from 'react';
 
-export async function getAllPosts(): Promise<Post[]> {
+// 한 번 렌더링된 데이터는 캐싱하여 재사용
+// fetch()를 사용할 땐 굳이 cache로 래핑할 필요 없음.
+export const getAllPosts = cache(async () => {
   const filePath = path.join(process.cwd(), 'data', 'posts.json');
   const data = await readFile(filePath, 'utf-8');
   const posts: Post[] = JSON.parse(data);
 
   return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
-}
+});
 
 export async function getFeaturedPosts(): Promise<Post[]> {
   const posts = await getAllPosts();
