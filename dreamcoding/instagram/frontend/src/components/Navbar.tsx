@@ -9,6 +9,7 @@ import NewIcon from './ui/icons/NewIcon';
 import NewFillIcon from './ui/icons/NewFillIcon';
 import ColorButton from './ui/ColorButton';
 import { usePathname } from 'next/navigation';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const menu = [
   { href: '/', icon: <HomeIcon />, clickedIcon: <HomeFillIcon /> },
@@ -17,26 +18,27 @@ const menu = [
 ];
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const pathName = usePathname();
 
-  const onClick = () => {
-    console.log('on click')
-  }
-
   return (
-    <div className='flex justify-between items-center px-6'>
+    <div className="flex justify-between items-center px-6">
       <Link href="/">
-        <h1 className='text-3xl font-bold'>Instagram</h1>
+        <h1 className="text-3xl font-bold">Instagram</h1>
       </Link>
-      <nav className='flex items-center'>
-        <ul className='flex gap-4 items-center p-4'>
+      <nav className="flex items-center">
+        <ul className="flex gap-4 items-center p-4">
           {menu.map(({ href, icon, clickedIcon }) => (
             <li key={href}>
               <Link href={href}>{pathName === href ? clickedIcon : icon}</Link>
             </li>
           ))}
         </ul>
-        <ColorButton text="Sign in" onClick={onClick} />
+        {session ? (
+          <ColorButton text="Sign out" onClick={signOut} />
+        ) : (
+          <ColorButton text="Sign in" onClick={signIn} />
+        )}
       </nav>
     </div>
   );
