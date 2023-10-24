@@ -1,8 +1,8 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import Signin from '@/components/Signin';
 import { getServerSession } from 'next-auth';
 import { getProviders } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import Signin from '@/components/Signin';
 
 interface Props {
   searchParams: {
@@ -22,7 +22,7 @@ export default async function SignPage({
   const providers = (await getProviders()) ?? {};
 
   return (
-    <section className="flex flex-col items-center gap-2 mt-[30%]">
+    <section className="flex flex-col items-center gap-2 mt-24">
       <Signin providers={providers} callbackUrl={callbackUrl ?? '/'} />
     </section>
   );
