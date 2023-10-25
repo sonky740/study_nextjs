@@ -16,7 +16,7 @@ export default function Avatar({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image ?? undefined}
-        className={`bg-white rounded-full p-[0.1rem] ${getImageSizeStyle(size)}`}
+        className={`bg-white object-cover rounded-full p-[0.1rem] ${getImageSizeStyle(size)}`}
         alt="user profile"
         referrerPolicy="no-referrer"
       />
